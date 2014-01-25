@@ -5,6 +5,7 @@ public class Controller : MonoBehaviour {
 	public float speed = 0.5F;
 	public float jumpSpeed = .50F;
 	public float gravity = 10.0F;
+	public Transform sunBeam;
 	private Vector3 moveDirection = Vector3.zero;
 	private Transform groundCheck;
 	private bool grounded = false;
@@ -72,6 +73,11 @@ public class Controller : MonoBehaviour {
 
 	void SpreadSunshine(){
 		Debug.Log ("Fire");
+		Transform temp;
+		Vector3 vectorAdjust = gameObject.transform.position;
+		vectorAdjust.x += .2f * facing;
+		temp = (Transform)Instantiate (sunBeam, vectorAdjust, Quaternion.identity);
+		temp.GetComponent<SunBeamController> ().setDir (facing);
 	}
 
 	//Basic collision detection checking for two differently named objects
