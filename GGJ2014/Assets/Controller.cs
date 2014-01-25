@@ -9,55 +9,65 @@ public class Controller : MonoBehaviour {
 	private Transform groundCheck;
 	private bool grounded = false;
 	protected Animator animator;
+	private int facing = 1;
 	// Use this for initialization
 	void Start () {
 		groundCheck = transform.Find("groundCheck");
 		animator = GetComponent<Animator>();
+		moveDirection = new Vector3(0, 0, 0);
 	}
 	
 	// Update is called once per frame
 	void Update() {
 		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-
-		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-		moveDirection = transform.TransformDirection(moveDirection);
-		moveDirection *= speed;
 		//on demand output diagnostics to log
+		if(Input.GetKey("d")){
+			if(facing < 0){
+				facing = 1;
+				Vector3 theScale = transform.localScale;
+				theScale.x *= -1;
+				transform.localScale = theScale;
+			}
+
+			moveDirection.x = speed * Time.deltaTime;
+		}
+		if(Input.GetKey("a")){
+			if(facing > 0){
+				facing = -1;
+				Vector3 theScale = transform.localScale;
+				theScale.x *= -1;
+				transform.localScale = theScale;
+			}
+			moveDirection.x = -1 *( speed * Time.deltaTime);
+		}
+
+
 		if (Input.GetKeyUp("l")) {
 			Debug.Log ("Is Grounded: "+grounded);
 		}
 
-		if (Input.GetKeyUp("a")) {
-			Debug.Log ("Is Grounded: "+grounded);
-		}
 		if(grounded){
+			moveDirection.y = 0;
 			animator.SetBool("grounded", true);
-			Debug.Log ("grounded");
-			if (Input.GetKeyUp("w")) {
+			if (Input.GetKeyDown("w")) {
 				moveDirection.y = jumpSpeed;
 				animator.SetBool("grounded", false);
 			}
 		}
+		if (moveDirection.x == 0) {
+			animator.SetBool ("walking", false);
+		} else {
+			animator.SetBool ("walking", true);
+		}
 
-
-		if(Input.GetKeyUp("space")){
+		if(Input.GetKeyDown("space")){
 			SpreadSunshine ();
 		}
 		if (!grounded) {
 			moveDirection.y -= gravity * Time.deltaTime;
 		}
 		gameObject.transform.Translate (moveDirection);
-		/*CharacterController controller = GetComponent<CharacterController>();
-		if (controller.isGrounded) {
-			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-			moveDirection = transform.TransformDirection(moveDirection);
-			moveDirection *= speed;
-			if (Input.GetButton("Jump"))
-				moveDirection.y = jumpSpeed;
-			
-		}
-		moveDirection.y -= gravity * Time.deltaTime;
-		controller.Move(moveDirection * Time.deltaTime);*/
+		moveDirection.x = 0;
 	}
 
 	void SpreadSunshine(){
@@ -69,8 +79,5 @@ public class Controller : MonoBehaviour {
 		if(col.gameObject.name == "Block"){
 				Debug.Log("Hit the block");
 			}
-		if(col.gameObject.name == "platform"){
-			Debug.Log("Hit the platform");
-		}
 	}
 }
