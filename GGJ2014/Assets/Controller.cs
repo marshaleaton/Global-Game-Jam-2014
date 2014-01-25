@@ -8,13 +8,17 @@ public class Controller : MonoBehaviour {
 	private Vector3 moveDirection = Vector3.zero;
 	private Transform groundCheck;
 	private bool grounded = false;
+	protected Animator animator;
 	// Use this for initialization
 	void Start () {
 		groundCheck = transform.Find("groundCheck");
+		animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void Update() {
+		AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+		Debug.Log (stateInfo.nameHash.ToString());
 		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
 		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -28,12 +32,14 @@ public class Controller : MonoBehaviour {
 		if (Input.GetKeyUp("a")) {
 			Debug.Log ("Is Grounded: "+grounded);
 		}
-		if (Input.GetKeyUp("w")) {
-
-			if(grounded){
+		if(grounded){
+			animator.SetBool("grounded", true);
+			if (Input.GetKeyUp("w")) {
 				moveDirection.y = jumpSpeed;
+				animator.SetBool("grounded", false);
 			}
 		}
+
 
 		if(Input.GetKeyUp("space")){
 			SpreadSunshine ();
