@@ -17,8 +17,6 @@ public class Controller : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-		AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-		Debug.Log (stateInfo.nameHash.ToString());
 		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
 		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -34,6 +32,7 @@ public class Controller : MonoBehaviour {
 		}
 		if(grounded){
 			animator.SetBool("grounded", true);
+			Debug.Log ("grounded");
 			if (Input.GetKeyUp("w")) {
 				moveDirection.y = jumpSpeed;
 				animator.SetBool("grounded", false);
