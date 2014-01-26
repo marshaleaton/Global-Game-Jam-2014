@@ -7,6 +7,10 @@ public class RainController : MonoBehaviour {
 	public int hp = 3;
 	public Vector3 moveDirection = new Vector3(0, 0, 0);
 	public int points = 100;
+	public float pauseDelay = 1.0f;
+	public float pauseTimer = 1.0f;
+	public float moveDelay = 2.0f;
+	public float moveTimer = 0.0f;
 	// Use this for initialization
 	void Start () {
 
@@ -21,15 +25,14 @@ public class RainController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		moveDirection.x = speed * direction;
-		gameObject.transform.Translate (moveDirection);
+		RainPattern ();
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Wall") {
-
+			direction *= -1;
 		}
-		if (coll.gameObject.tag == "Sunbeam") {
+		else if (coll.gameObject.tag == "Sunbeam") {
 			hp--;
 			if(hp <= 0){
 				GameObject gameController = GameObject.Find("GameController");
@@ -37,10 +40,28 @@ public class RainController : MonoBehaviour {
 				Destroy (gameObject);
 			}
 		}
-		if (coll.gameObject.name == "Block") {
+		else if (coll.gameObject.name == "Block") {
 		}
 		else{
 			direction *= -1;
+		}
+	}
+
+	void RainPattern(){
+		if (moveTimer <= moveDelay) {
+			moveDirection.x = speed * direction;
+			gameObject.transform.Translate (moveDirection);
+			moveTimer += Time.deltaTime;
+		}
+		else if (pauseTimer >= pauseDelay){
+			moveTimer = 0.0f;
+			if (Random.value >= .5f) {
+				direction *= -1;
+			}
+			pauseTimer = 0.0f;
+		}
+		else{
+			pauseTimer += Time.deltaTime;
 		}
 	}
 

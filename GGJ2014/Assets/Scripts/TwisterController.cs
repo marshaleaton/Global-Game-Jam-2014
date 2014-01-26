@@ -7,6 +7,7 @@ public class TwisterController : MonoBehaviour {
 	public int hp = 3;
 	public Vector3 moveDirection = new Vector3(0, 0, 0);
 	public int points = 300;
+	public float changeDirectionThreshold = .95f;
 	// Use this for initialization
 	void Start () {
 		float dir = Random.value;
@@ -22,13 +23,15 @@ public class TwisterController : MonoBehaviour {
 	void Update () {
 		moveDirection.x = speed * direction;
 		gameObject.transform.Translate (moveDirection);
+		DecideToChangeDirection ();
+
 	}
 	
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Wall") {
-			
+			direction *= -1;
 		}
-		if (coll.gameObject.tag == "Sunbeam") {
+		else if (coll.gameObject.tag == "Sunbeam") {
 			hp--;
 			if(hp <= 0){
 				GameObject gameController = GameObject.Find("GameController");
@@ -36,7 +39,7 @@ public class TwisterController : MonoBehaviour {
 				Destroy (gameObject);
 			}
 		}
-		if (coll.gameObject.name == "Block") {
+		else if (coll.gameObject.name == "Block") {
 		}
 		else{
 			direction *= -1;
@@ -46,5 +49,11 @@ public class TwisterController : MonoBehaviour {
 	void OnCollisionExit2D(Collision2D coll){
 		
 	}
-	
+
+	void DecideToChangeDirection(){
+		//Randome number generate to make decision to change direction
+		if (Random.value >= changeDirectionThreshold) {
+			direction *= -1;
+		}
+	}
 }

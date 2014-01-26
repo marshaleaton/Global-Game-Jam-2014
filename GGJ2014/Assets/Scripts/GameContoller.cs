@@ -36,6 +36,10 @@ public class GameContoller : MonoBehaviour {
 		healthObj.GetComponent<HealthMeterController> ().changeHP (currentHP);
 	}
 
+	void generateSuns(){
+
+	}
+
 	void gameOver(){
 
 	}

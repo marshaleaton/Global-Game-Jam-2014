@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Life : MonoBehaviour {
+public class CollectableSun : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

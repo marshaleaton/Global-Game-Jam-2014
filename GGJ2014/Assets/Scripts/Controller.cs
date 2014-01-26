@@ -14,6 +14,8 @@ public class Controller : MonoBehaviour {
 	public int hp = 5;
 	public float hitTimer = 0.0f;
 	public int hitDelay = 1;
+	public float shotTimer = 1.0f;
+	public int shotDelay = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +30,7 @@ public class Controller : MonoBehaviour {
 		//on demand output diagnostics to log
 		getInput ();
 		hitTimer += Time.deltaTime;
+		shotTimer += Time.deltaTime;
 	}
 
 	public int getHP(){
@@ -35,11 +38,14 @@ public class Controller : MonoBehaviour {
 	}
 
 	void SpreadSunshine(){
-		Transform temp;
-		Vector3 vectorAdjust = gameObject.transform.position;
-		vectorAdjust.x += .2f * facing;
-		temp = (Transform)Instantiate (sunBeam, vectorAdjust, Quaternion.identity);
-		temp.GetComponent<SunBeamController> ().setDir (facing);
+		if(shotTimer >= shotDelay){
+			Transform temp;
+			Vector3 vectorAdjust = gameObject.transform.position;
+			vectorAdjust.x += .2f * facing;
+			temp = (Transform)Instantiate (sunBeam, vectorAdjust, Quaternion.identity);
+			temp.GetComponent<SunBeamController> ().setDir (facing);
+			shotTimer = 0.0f;
+		}
 	}
 
 	void getInput(){
@@ -97,6 +103,11 @@ public class Controller : MonoBehaviour {
 					moveDirection.y = 0;
 				}
 			}
+		if(coll.gameObject.name == "bar"){
+			if(moveDirection.y >0){
+				moveDirection.y = 0;
+			}
+		}
 		if(coll.gameObject.tag == "Enemy"){
 			if(hitTimer >= hitDelay){
 				hp--;
