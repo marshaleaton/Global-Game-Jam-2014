@@ -8,7 +8,7 @@ public class GameContoller : MonoBehaviour {
 	public int score = 0;
 	public GUIText scoreObj;
 	public GameObject healthObj;
-	public GameObject[] enemies;
+	//public GameObject[] enemies;
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad(this);
@@ -43,7 +43,7 @@ public class GameContoller : MonoBehaviour {
 
 	void adjustHP(){
 		healthObj.GetComponent<HealthMeterController> ().changeHP (currentHP);
-			enemies = GameObject.FindGameObjectsWithTag("Enemy");
+			//enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		
 		/*foreach (GameObject enemy in enemies) {
 			Debug.Log(enemy.name);

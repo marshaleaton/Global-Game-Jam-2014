@@ -4,7 +4,7 @@ using System.Collections;
 public class RainController : MonoBehaviour {
 	public int direction = 0;
 	public float speed;
-	public int hp = 3;
+	private int hp = 1;
 	public Vector3 moveDirection = new Vector3(0, 0, 0);
 	public int points = 100;
 	public float pauseDelay = 1.0f;
@@ -12,9 +12,34 @@ public class RainController : MonoBehaviour {
 	public float moveDelay = 2.0f;
 	public float moveTimer = 0.0f;
 	public AudioClip hurt;
+	public int playerHP;
 	// Use this for initialization
 	void Start () {
-
+		GameObject gameController = GameObject.Find("GameController");
+		playerHP = gameController.GetComponent<GameContoller> ().getHealth();
+		if (playerHP == 5) {
+			
+		}
+		
+		else if (playerHP == 4) {
+			//gets more erratic
+			speed+=(speed/2);
+		}
+		
+		else if (playerHP == 3) {
+			//gets harder to kill
+			hp = 2;
+		}
+		
+		else if (playerHP == 2) {
+			//gets faster
+			moveDelay += (moveDelay/2);
+		}
+		
+		else if (playerHP == 1) {
+			//gets even harder to kill
+			pauseDelay += pauseDelay;
+		}
 		float dir = Random.value;
 		if (dir > .5) {
 			direction = 1;

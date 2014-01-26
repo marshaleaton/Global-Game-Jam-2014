@@ -53,7 +53,9 @@ public class Controller : MonoBehaviour {
 	}
 
 	void getInput(){
+		Debug.Log ("hi");
 		if(Input.GetKey("d")){
+			Debug.Log("d");
 			if(facing < 0){
 				facing = 1;
 				Vector3 theScale = transform.localScale;

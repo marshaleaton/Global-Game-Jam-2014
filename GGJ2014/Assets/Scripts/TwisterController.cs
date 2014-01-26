@@ -6,7 +6,7 @@ public class TwisterController : MonoBehaviour {
 	public float speed;
 	public int hp = 3;
 	public Vector3 moveDirection = new Vector3(0, 0, 0);
-	public int points = 300;
+	public int points = 200;
 	public float changeDirectionThreshold = .95f;
 	public AudioClip hurt;
 	public int playerHP;
@@ -15,23 +15,27 @@ public class TwisterController : MonoBehaviour {
 		GameObject gameController = GameObject.Find("GameController");
 		playerHP = gameController.GetComponent<GameContoller> ().getHealth();
 		if (playerHP == 5) {
-			
+
 		}
 		
 		else if (playerHP == 4) {
-			
+			//gets more erratic
+			changeDirectionThreshold = .85f;
 		}
 		
 		else if (playerHP == 3) {
-			
+			//gets harder to kill
+			hp = 4;
 		}
 		
 		else if (playerHP == 2) {
-			
+			//gets faster
+			speed+=speed;
 		}
 		
 		else if (playerHP == 1) {
-			
+			//gets even harder to kill
+			hp = 5;
 		}
 		float dir = Random.value;
 		if (dir > .5) {
@@ -81,7 +85,7 @@ public class TwisterController : MonoBehaviour {
 		}
 	}
 
-	public void hpChanged(int playerHP){
+	/*public void hpChanged(int playerHP){
 
-	}
+	}*/
 }

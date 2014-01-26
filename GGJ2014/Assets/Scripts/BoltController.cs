@@ -4,18 +4,45 @@ using System.Collections;
 public class BoltController : MonoBehaviour {
 	public int direction = 0;
 	public float speed;
-	public int hp = 3;
-	public int points = 200;
+	public int hp = 2;
+	public int points = 500;
 	public Vector3 moveDirection = new Vector3(0, 0, 0);
 	private Transform groundCheck;
 	private bool grounded = false;
 	public float jumpSpeedMax = 1.0f;
 	public float jumpSpeedMin = 0.1f;
 	public float gravity = 1.0f;
+	public int playerHP;
 	public AudioClip hurt;
 
 	// Use this for initialization
 	void Start () {
+		GameObject gameController = GameObject.Find("GameController");
+		playerHP = gameController.GetComponent<GameContoller> ().getHealth();
+		if (playerHP == 5) {
+			
+		}
+		
+		else if (playerHP == 4) {
+			//gets more erratic
+			jumpSpeedMax += .1f;
+		}
+		
+		else if (playerHP == 3) {
+			//gets harder to kill
+			hp = 3;
+		}
+		
+		else if (playerHP == 2) {
+			//gets faster
+			speed+=(speed/2);
+		}
+		
+		else if (playerHP == 1) {
+			//gets even harder to kill
+			hp = 4;
+		}
+
 		groundCheck = transform.Find("groundCheck");
 		float dir = Random.value;
 		if (dir > .5) {
