@@ -17,9 +17,7 @@ public class SunSpawner : MonoBehaviour {
 	}
 
 	void generateSuns(){
-		Debug.Log (currentSun);
 		if(currentSun == null){
-
 			int hp = gameCont.GetComponent<GameContoller> ().getHealth ();
 			if(hp <= 0){hp = 1;}
 			if (Random.value <= probabilities[hp-1]) {

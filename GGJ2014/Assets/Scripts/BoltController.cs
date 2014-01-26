@@ -66,8 +66,8 @@ public class BoltController : MonoBehaviour {
 		moveDirection.x = speed * direction;
 		gameObject.transform.Translate (moveDirection);
 	}
-	
-	void OnCollisionExit2D(Collision2D coll){
+
+	public void hpChanged(int hp){
 		
 	}
 	

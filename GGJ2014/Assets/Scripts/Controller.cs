@@ -15,8 +15,8 @@ public class Controller : MonoBehaviour {
 	public float hitTimer = 0.0f;
 	public int hitDelay = 1;
 	public float shotTimer = 1.0f;
-	public int shotDelay = 1;
-
+	public float shotDelay = 1;
+	public AudioClip jumpSound;
 	// Use this for initialization
 	void Start () {
 		groundCheck = transform.Find("groundCheck");
@@ -78,6 +78,7 @@ public class Controller : MonoBehaviour {
 			if (Input.GetKeyDown("w")) {
 				moveDirection.y = jumpSpeed;
 				animator.SetBool("grounded", false);
+				AudioSource.PlayClipAtPoint(jumpSound, gameObject.transform.position);
 			}
 		}
 		if (moveDirection.x == 0) {
@@ -116,6 +117,10 @@ public class Controller : MonoBehaviour {
 		}
 		if(coll.gameObject.tag == "Health"){
 			hp++;
+		}
+		if (coll.gameObject.name == "killer") {
+			hp = 0;
+			Destroy (gameObject);
 		}
 
 	}

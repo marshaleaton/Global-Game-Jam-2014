@@ -65,8 +65,8 @@ public class RainController : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionExit2D(Collision2D coll){
-
+	public void hpChanged(int hp){
+		
 	}
 		
 }

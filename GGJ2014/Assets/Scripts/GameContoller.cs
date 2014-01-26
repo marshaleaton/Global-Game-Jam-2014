@@ -8,6 +8,7 @@ public class GameContoller : MonoBehaviour {
 	public int score = 0;
 	public GUIText scoreObj;
 	public GameObject healthObj;
+	public GameObject[] enemies;
 	// Use this for initialization
 	void Start () {
 		playerScript = player.GetComponent<Controller> ();
@@ -30,6 +31,9 @@ public class GameContoller : MonoBehaviour {
 	public int getHealth(){
 		return currentHP;
 	}
+	public int getScore(){
+		return score;
+	}
 
 	public void increaseScore(int points){
 		score += points;
@@ -38,9 +42,15 @@ public class GameContoller : MonoBehaviour {
 
 	void adjustHP(){
 		healthObj.GetComponent<HealthMeterController> ().changeHP (currentHP);
+			enemies = GameObject.FindGameObjectsWithTag("Enemy");
+		
+		foreach (GameObject enemy in enemies) {
+			Debug.Log(enemy.name);
+			if(enemy.name == "RainEnemy (Clone)"){
+			   enemy.GetComponent<RainController>().hpChanged(currentHP);
+			 }
+		}
 	}
-
-
 
 	void gameOver(){
 

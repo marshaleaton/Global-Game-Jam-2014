@@ -56,4 +56,8 @@ public class TwisterController : MonoBehaviour {
 			direction *= -1;
 		}
 	}
+
+	public void hpChanged(int hp){
+
+	}
 }
