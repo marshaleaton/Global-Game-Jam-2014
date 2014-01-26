@@ -11,6 +11,9 @@ public class SunBeamController : MonoBehaviour {
 	}
 	public void setDir(int dir){
 		direction = dir;
+		Vector3 theScale = transform.localScale;
+		theScale.x *= dir;
+		transform.localScale = theScale;
 		moveDirection = new Vector3 (direction * speed, 0, 0);
 	}
 	
