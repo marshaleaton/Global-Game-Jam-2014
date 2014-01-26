@@ -11,6 +11,10 @@ public class Controller : MonoBehaviour {
 	private bool grounded = false;
 	protected Animator animator;
 	private int facing = 1;
+	public int hp = 5;
+	public float hitTimer = 0.0f;
+	public int hitDelay = 1;
+
 	// Use this for initialization
 	void Start () {
 		groundCheck = transform.Find("groundCheck");
@@ -22,6 +26,23 @@ public class Controller : MonoBehaviour {
 	void Update() {
 		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 		//on demand output diagnostics to log
+		getInput ();
+		hitTimer += Time.deltaTime;
+	}
+
+	public int getHP(){
+		return hp;
+	}
+
+	void SpreadSunshine(){
+		Transform temp;
+		Vector3 vectorAdjust = gameObject.transform.position;
+		vectorAdjust.x += .2f * facing;
+		temp = (Transform)Instantiate (sunBeam, vectorAdjust, Quaternion.identity);
+		temp.GetComponent<SunBeamController> ().setDir (facing);
+	}
+
+	void getInput(){
 		if(Input.GetKey("d")){
 			if(facing < 0){
 				facing = 1;
@@ -29,7 +50,7 @@ public class Controller : MonoBehaviour {
 				theScale.x *= -1;
 				transform.localScale = theScale;
 			}
-
+			
 			moveDirection.x = speed * Time.deltaTime;
 		}
 		if(Input.GetKey("a")){
@@ -41,12 +62,10 @@ public class Controller : MonoBehaviour {
 			}
 			moveDirection.x = -1 *( speed * Time.deltaTime);
 		}
-
-
 		if (Input.GetKeyUp("l")) {
 			Debug.Log ("Is Grounded: "+grounded);
 		}
-
+		
 		if(grounded){
 			moveDirection.y = 0;
 			animator.SetBool("grounded", true);
@@ -60,7 +79,7 @@ public class Controller : MonoBehaviour {
 		} else {
 			animator.SetBool ("walking", true);
 		}
-
+		
 		if(Input.GetKeyDown("space")){
 			SpreadSunshine ();
 		}
@@ -71,19 +90,18 @@ public class Controller : MonoBehaviour {
 		moveDirection.x = 0;
 	}
 
-	void SpreadSunshine(){
-		Debug.Log ("Fire");
-		Transform temp;
-		Vector3 vectorAdjust = gameObject.transform.position;
-		vectorAdjust.x += .2f * facing;
-		temp = (Transform)Instantiate (sunBeam, vectorAdjust, Quaternion.identity);
-		temp.GetComponent<SunBeamController> ().setDir (facing);
-	}
-
 	//Basic collision detection checking for two differently named objects
-	void OnCollisionEnter (Collision col){
-		if(col.gameObject.name == "Block"){
-				Debug.Log("Hit the block");
+	void OnCollisionEnter2D(Collision2D coll){
+		if(coll.gameObject.name == "Block"){
+				if(moveDirection.y >0){
+					moveDirection.y = 0;
+				}
 			}
+		if(coll.gameObject.tag == "Enemy"){
+			if(hitTimer >= hitDelay){
+				hp--;
+				hitTimer = 0.0f;
+			}
+		}
 	}
 }

@@ -20,8 +20,9 @@ public class SunBeamController : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		//if (coll.gameObject.tag == "Enemy")
-			//coll.gameObject.SendMessage("ApplyDamage", 10);
+		if (coll.gameObject.tag == "Wall") {
+			direction *= -1;
+		}
 		Destroy (gameObject);
 	}
 }
