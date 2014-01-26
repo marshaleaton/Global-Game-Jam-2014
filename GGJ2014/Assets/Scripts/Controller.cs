@@ -17,6 +17,9 @@ public class Controller : MonoBehaviour {
 	public float shotTimer = 1.0f;
 	public float shotDelay = 1;
 	public AudioClip jumpSound;
+	public AudioClip hpUp;
+	public AudioClip hurt;
+	public AudioClip fire;
 	// Use this for initialization
 	void Start () {
 		groundCheck = transform.Find("groundCheck");
@@ -44,6 +47,7 @@ public class Controller : MonoBehaviour {
 			vectorAdjust.x += .2f * facing;
 			temp = (Transform)Instantiate (sunBeam, vectorAdjust, Quaternion.identity);
 			temp.GetComponent<SunBeamController> ().setDir (facing);
+			AudioSource.PlayClipAtPoint(fire, gameObject.transform.position);
 			shotTimer = 0.0f;
 		}
 	}
@@ -112,11 +116,13 @@ public class Controller : MonoBehaviour {
 		if(coll.gameObject.tag == "Enemy"){
 			if(hitTimer >= hitDelay){
 				hp--;
+				AudioSource.PlayClipAtPoint(hurt, gameObject.transform.position);
 				hitTimer = 0.0f;
 			}
 		}
 		if(coll.gameObject.tag == "Health"){
 			hp++;
+			AudioSource.PlayClipAtPoint(hpUp, gameObject.transform.position);
 		}
 		if (coll.gameObject.name == "killer") {
 			hp = 0;

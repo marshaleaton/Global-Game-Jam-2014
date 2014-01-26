@@ -8,8 +8,31 @@ public class TwisterController : MonoBehaviour {
 	public Vector3 moveDirection = new Vector3(0, 0, 0);
 	public int points = 300;
 	public float changeDirectionThreshold = .95f;
+	public AudioClip hurt;
+	public int playerHP;
 	// Use this for initialization
 	void Start () {
+		GameObject gameController = GameObject.Find("GameController");
+		playerHP = gameController.GetComponent<GameContoller> ().getHealth();
+		if (playerHP == 5) {
+			
+		}
+		
+		else if (playerHP == 4) {
+			
+		}
+		
+		else if (playerHP == 3) {
+			
+		}
+		
+		else if (playerHP == 2) {
+			
+		}
+		
+		else if (playerHP == 1) {
+			
+		}
 		float dir = Random.value;
 		if (dir > .5) {
 			direction = 1;
@@ -33,6 +56,7 @@ public class TwisterController : MonoBehaviour {
 		}
 		else if (coll.gameObject.tag == "Sunbeam") {
 			hp--;
+			AudioSource.PlayClipAtPoint(hurt, gameObject.transform.position);
 			if(hp <= 0){
 				GameObject gameController = GameObject.Find("GameController");
 				gameController.GetComponent<GameContoller> ().increaseScore(points);
@@ -57,7 +81,7 @@ public class TwisterController : MonoBehaviour {
 		}
 	}
 
-	public void hpChanged(int hp){
+	public void hpChanged(int playerHP){
 
 	}
 }

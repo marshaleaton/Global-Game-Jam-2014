@@ -11,6 +11,7 @@ public class RainController : MonoBehaviour {
 	public float pauseTimer = 1.0f;
 	public float moveDelay = 2.0f;
 	public float moveTimer = 0.0f;
+	public AudioClip hurt;
 	// Use this for initialization
 	void Start () {
 
@@ -34,6 +35,7 @@ public class RainController : MonoBehaviour {
 		}
 		else if (coll.gameObject.tag == "Sunbeam") {
 			hp--;
+			AudioSource.PlayClipAtPoint(hurt, gameObject.transform.position);
 			if(hp <= 0){
 				GameObject gameController = GameObject.Find("GameController");
 				gameController.GetComponent<GameContoller> ().increaseScore(points);
@@ -65,7 +67,7 @@ public class RainController : MonoBehaviour {
 		}
 	}
 
-	public void hpChanged(int hp){
+	public void hpChanged(int playerHP){
 		
 	}
 		

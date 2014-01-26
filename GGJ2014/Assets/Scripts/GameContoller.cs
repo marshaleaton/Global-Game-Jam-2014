@@ -11,6 +11,7 @@ public class GameContoller : MonoBehaviour {
 	public GameObject[] enemies;
 	// Use this for initialization
 	void Start () {
+		DontDestroyOnLoad(this);
 		playerScript = player.GetComponent<Controller> ();
 		scoreObj.text = "Score:" + score;
 	}
@@ -44,15 +45,15 @@ public class GameContoller : MonoBehaviour {
 		healthObj.GetComponent<HealthMeterController> ().changeHP (currentHP);
 			enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		
-		foreach (GameObject enemy in enemies) {
+		/*foreach (GameObject enemy in enemies) {
 			Debug.Log(enemy.name);
 			if(enemy.name == "RainEnemy (Clone)"){
 			   enemy.GetComponent<RainController>().hpChanged(currentHP);
 			 }
-		}
+		}*/
 	}
 
 	void gameOver(){
-
+		Application.LoadLevel ("Game Over");
 	}
 }

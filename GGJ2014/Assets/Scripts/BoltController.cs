@@ -12,6 +12,7 @@ public class BoltController : MonoBehaviour {
 	public float jumpSpeedMax = 1.0f;
 	public float jumpSpeedMin = 0.1f;
 	public float gravity = 1.0f;
+	public AudioClip hurt;
 
 	// Use this for initialization
 	void Start () {
@@ -37,6 +38,7 @@ public class BoltController : MonoBehaviour {
 						direction *= -1;
 				} else if (coll.gameObject.tag == "Sunbeam") {
 						hp--;
+						AudioSource.PlayClipAtPoint(hurt, gameObject.transform.position);
 						if (hp <= 0) {
 								GameObject gameController = GameObject.Find ("GameController");
 								gameController.GetComponent<GameContoller> ().increaseScore (points);
