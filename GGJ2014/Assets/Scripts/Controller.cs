@@ -114,5 +114,9 @@ public class Controller : MonoBehaviour {
 				hitTimer = 0.0f;
 			}
 		}
+		if(coll.gameObject.tag == "Health"){
+			hp++;
+		}
+
 	}
 }

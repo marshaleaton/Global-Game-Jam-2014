@@ -27,6 +27,10 @@ public class GameContoller : MonoBehaviour {
 		}
 	}
 
+	public int getHealth(){
+		return currentHP;
+	}
+
 	public void increaseScore(int points){
 		score += points;
 		scoreObj.text = "Score:" + score;
@@ -36,9 +40,7 @@ public class GameContoller : MonoBehaviour {
 		healthObj.GetComponent<HealthMeterController> ().changeHP (currentHP);
 	}
 
-	void generateSuns(){
 
-	}
 
 	void gameOver(){
 
