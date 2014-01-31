@@ -13,7 +13,7 @@ public class GameContoller : MonoBehaviour {
 	void Start () {
 		DontDestroyOnLoad(this);
 		playerScript = player.GetComponent<Controller> ();
-		scoreObj.text = "Score:" + score;
+		scoreObj.text = "SCORE " + score;
 	}
 	
 	// Update is called once per frame
@@ -38,7 +38,7 @@ public class GameContoller : MonoBehaviour {
 
 	public void increaseScore(int points){
 		score += points;
-		scoreObj.text = "Score:" + score;
+		scoreObj.text = "SCORE " + score;
 	}
 
 	void adjustHP(){
