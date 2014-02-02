@@ -44,7 +44,7 @@ public class Controller : MonoBehaviour {
 		if(shotTimer >= shotDelay){
 			Transform temp;
 			Vector3 vectorAdjust = gameObject.transform.position;
-			vectorAdjust.x += .2f * facing;
+			vectorAdjust.x += 50 * facing;
 			temp = (Transform)Instantiate (sunBeam, vectorAdjust, Quaternion.identity);
 			temp.GetComponent<SunBeamController> ().setDir (facing);
 			AudioSource.PlayClipAtPoint(fire, gameObject.transform.position);
